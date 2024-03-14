@@ -18,6 +18,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NOME = "nome";
     private static final String COLUMN_DESCRICAO = "descricao";
     private static final String COLUMN_LOCAL = "local";
+    private static final String COLUMN_FOTO = "foto";
     MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -30,7 +31,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NOME + " TEXT, " +
                         COLUMN_DESCRICAO + " TEXT, " +
-                        COLUMN_LOCAL + " TEXT);";
+                        COLUMN_LOCAL + " TEXT, " +
+                        COLUMN_FOTO + " TEXT);";
         db.execSQL(query);
     }
 
@@ -40,13 +42,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addMovel(String nome, String descricao, String local){
+    void addMovel(String nome, String descricao, String local, String fotoPath){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_NOME, nome);
         contentValues.put(COLUMN_DESCRICAO, descricao);
         contentValues.put(COLUMN_LOCAL, local);
+        contentValues.put(COLUMN_FOTO, fotoPath);
         long resultado = db.insert(TABLE_NAME, null, contentValues);
         if (resultado == -1){
             Toast.makeText(context, "Falha ao adicionar movel!", Toast.LENGTH_SHORT).show();
