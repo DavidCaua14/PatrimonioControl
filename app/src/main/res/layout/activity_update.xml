@@ -48,7 +48,7 @@
         android:id="@+id/btn_atualizar"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#008000"
         android:text="Atualizar"
         android:textAllCaps="false"

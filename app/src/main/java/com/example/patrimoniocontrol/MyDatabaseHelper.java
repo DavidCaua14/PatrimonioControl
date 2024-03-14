@@ -19,6 +19,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DESCRICAO = "descricao";
     private static final String COLUMN_LOCAL = "local";
     private static final String COLUMN_FOTO = "foto";
+
     MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -52,13 +53,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_FOTO, fotoPath);
         long resultado = db.insert(TABLE_NAME, null, contentValues);
         if (resultado == -1){
-            Toast.makeText(context, "Falha ao adicionar movel!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Falha ao adicionar móvel!", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, "Móvel adicionado com sucesso!", Toast.LENGTH_SHORT).show();
         }
     }
+
     Cursor readAllData(){
-        String query = " SELECT * FROM " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -67,28 +69,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
-    void update(String row_id, String nome, String descricao, String local){
+
+    void update(String row_id, String nome, String descricao, String local, String fotoPath){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NOME, nome);
         contentValues.put(COLUMN_DESCRICAO, descricao);
         contentValues.put(COLUMN_LOCAL, local);
+        contentValues.put(COLUMN_FOTO, fotoPath); // Atualiza o caminho da foto
 
-      long resultado =  db.update(TABLE_NAME, contentValues, "id=?", new String[]{row_id});
-      if(resultado == -1){
-          Toast.makeText(context, "erro ao tentar atualizar!", Toast.LENGTH_SHORT).show();
-      } else {
-          Toast.makeText(context, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
-      }
+        long resultado =  db.update(TABLE_NAME, contentValues, "id=?", new String[]{row_id});
+        if(resultado == -1){
+            Toast.makeText(context, "Erro ao tentar atualizar!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     void deletar(String row_id){
         SQLiteDatabase db = this.getWritableDatabase();
         long resultado = db.delete(TABLE_NAME, "id=?", new String[]{row_id});
         if(resultado == -1){
-            Toast.makeText(context,"falha ao apagar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Falha ao apagar", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context,"Apagado com sucesso!", Toast.LENGTH_SHORT).show();
         }
+    }
+    Cursor getDataById(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=?";
+        return db.rawQuery(query, new String[]{row_id});
     }
 }
