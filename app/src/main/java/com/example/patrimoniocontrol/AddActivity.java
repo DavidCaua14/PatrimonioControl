@@ -122,5 +122,4 @@ public class AddActivity extends AppCompatActivity {
         }
         return image;
     }
-
 }

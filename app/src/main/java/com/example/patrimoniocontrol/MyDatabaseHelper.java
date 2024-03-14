@@ -58,7 +58,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Móvel adicionado com sucesso!", Toast.LENGTH_SHORT).show();
         }
     }
-
     Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -69,7 +68,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
-
     void update(String row_id, String nome, String descricao, String local, String fotoPath){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -85,7 +83,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Atualizado com sucesso!", Toast.LENGTH_SHORT).show();
         }
     }
-
     void deletar(String row_id){
         SQLiteDatabase db = this.getWritableDatabase();
         long resultado = db.delete(TABLE_NAME, "id=?", new String[]{row_id});
